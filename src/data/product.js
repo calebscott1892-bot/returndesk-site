@@ -130,6 +130,7 @@ export const content = {
   heroAccent: 'jobs pay',
   heroTrail: '.',
   heroNote: 'Start free · manual-first · nothing sends without you',
+  heroMetaTag: 'Manual-first',
 
   problemEyebrow: 'The reality',
   problemHeadline: 'The $5,000 job is buried three pages down.',

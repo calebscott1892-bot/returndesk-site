@@ -1,158 +1,78 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Check, EASE } from './primitives.jsx';
+import { CornerBrackets, EASE } from './primitives.jsx';
 
 /**
- * Crafted in-product mockup of ReturnDesk — a priority inbox that scores each
- * enquiry, explains why, and offers a one-click templated reply. C4 dark language
- * with ReturnDesk's azure accent. (Swap for a real suite-app screenshot later.)
+ * ReturnDesk hero visual — an editorial "blueprint" of the priority queue,
+ * in the C4 engineering-drawing style: hairline borders, monospace labels,
+ * minimal radius, accent used sparingly. Light, not a dark neon window.
  */
-const ENQUIRIES = [
-  {
-    score: 94,
-    band: 'High',
-    from: 'Sarah M.',
-    subject: 'Quote — full bathroom renovation',
-    reason: 'Quote intent · ready to book · high value',
-    top: true,
-  },
-  {
-    score: 71,
-    band: 'Med',
-    from: 'James T.',
-    subject: 'Re: availability next week?',
-    reason: 'Booking · existing customer',
-  },
-  {
-    score: 23,
-    band: 'Low',
-    from: 'Trade Weekly',
-    subject: 'Newsletter: 10 plumbing tips',
-    reason: 'Promotional · low intent',
-    muted: true,
-  },
+const ITEMS = [
+  { score: '94', band: 'HIGH', from: 'Sarah M.', subj: 'Quote — full bathroom reno', why: 'Quote intent · ready to book', top: true },
+  { score: '71', band: 'MED', from: 'James T.', subj: 'Re: availability next week?', why: 'Booking · existing customer' },
+  { score: '23', band: 'LOW', from: 'Trade Weekly', subj: 'Newsletter: plumbing tips', why: 'Promotional · low intent', muted: true },
 ];
 
 export default function ProductMock() {
   const reduce = useReducedMotion();
   const rise = (delay) =>
-    reduce
-      ? {}
-      : { initial: { opacity: 0, y: 14 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.6, delay, ease: EASE } };
+    reduce ? {} : { initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.6, delay, ease: EASE } };
 
   return (
     <div className="relative">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -inset-8 -z-10 rounded-[40px] opacity-60 blur-3xl"
-        style={{ background: 'radial-gradient(60% 60% at 70% 20%, var(--accent-glow), transparent 70%)' }}
-      />
+      <motion.div {...rise(0.1)} className="relative rounded-[3px] border border-line bg-card" style={{ boxShadow: '0 24px 60px -34px rgba(26,26,26,0.28)' }}>
+        <CornerBrackets inset={10} size={16} />
 
-      <motion.div
-        {...rise(0.05)}
-        className="overflow-hidden rounded-2xl border border-line bg-card shadow-[0_30px_80px_-30px_rgba(0,0,0,0.8)]"
-      >
-        {/* Window chrome */}
-        <div className="flex items-center gap-2 border-b border-line bg-white/[0.02] px-4 py-3">
-          <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-          <span className="ml-3 text-xs font-medium text-ink-subtle">ReturnDesk · Priority inbox</span>
-          <span className="ml-auto rounded-full bg-accent-soft px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-accent">
-            Beta
+        <div className="flex items-center justify-between border-b border-line px-5 py-3">
+          <span className="mono inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.18em] text-ink-subtle">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+            ReturnDesk · Priority queue
           </span>
+          <span className="mono hidden text-[9px] uppercase tracking-[0.2em] text-ink-faint sm:inline">Sheet · RD-01</span>
         </div>
 
-        {/* Sort header */}
-        <div className="flex items-center justify-between border-b border-line px-4 py-2.5 text-[11px] text-ink-faint">
-          <span>3 of 18 enquiries</span>
-          <span className="inline-flex items-center gap-1.5 text-accent">
-            <SortIcon /> Sorted by priority
-          </span>
-        </div>
-
-        {/* Enquiry list */}
-        <div className="space-y-2 p-3">
-          {ENQUIRIES.map((e, i) => (
+        <div className="space-y-2 p-4">
+          {ITEMS.map((it, i) => (
             <motion.div
-              key={e.from}
-              {...rise(0.18 + i * 0.12)}
-              className={`rounded-xl border p-3 ${
-                e.top ? 'border-accent-line bg-accent-soft' : 'border-line bg-bg-alt'
-              } ${e.muted ? 'opacity-60' : ''}`}
+              key={it.from}
+              {...rise(0.2 + i * 0.1)}
+              className={`flex items-start gap-3 rounded-[3px] border p-3 ${
+                it.top ? 'border-accent-line bg-[color:var(--accent-soft)]' : 'border-line bg-bg-alt'
+              } ${it.muted ? 'opacity-60' : ''}`}
             >
-              <div className="flex items-start gap-3">
-                <ScoreChip score={e.score} band={e.band} muted={e.muted} />
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="truncate text-[13px] font-semibold text-ink">{e.from}</span>
-                    <span className="shrink-0 text-[10px] text-ink-faint">{i === 0 ? '2m' : i === 1 ? '14m' : '1h'}</span>
-                  </div>
-                  <p className="truncate text-[12px] text-ink-muted">{e.subject}</p>
-                  <p className="mt-1 inline-flex items-center gap-1 text-[11px] text-ink-subtle">
-                    <span className="text-accent">Why:</span> {e.reason}
-                  </p>
+              <span className={`flex h-10 w-10 shrink-0 flex-col items-center justify-center rounded-[3px] border ${it.top ? 'border-accent-line text-accent' : 'border-line text-ink-subtle'}`}>
+                <span className="mono text-[13px] font-semibold tabular-nums leading-none">{it.score}</span>
+                <span className="mono mt-0.5 text-[7px] font-medium uppercase tracking-[0.1em] opacity-80">{it.band}</span>
+              </span>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="truncate text-[13px] font-semibold text-ink">{it.from}</span>
+                  <span className="mono shrink-0 text-[9px] uppercase tracking-[0.1em] text-ink-faint">{i === 0 ? '2m' : i === 1 ? '14m' : '1h'}</span>
                 </div>
+                <p className="truncate text-[12px] text-ink-muted">{it.subj}</p>
+                <p className="mono mt-1 truncate text-[10px] uppercase tracking-[0.08em] text-ink-subtle">
+                  <span className="text-accent">Why</span> · {it.why}
+                </p>
               </div>
-              {e.top && (
-                <div className="mt-3 flex items-center gap-2 border-t border-accent-line/60 pt-3">
-                  <button
-                    type="button"
-                    tabIndex={-1}
-                    aria-hidden="true"
-                    className="flex items-center gap-1.5 rounded-lg bg-accent px-3 py-1.5 text-[12px] font-semibold text-[color:var(--accent-ink)]"
-                  >
-                    <Check className="h-3 w-3" /> Send quote
-                  </button>
-                  <span className="rounded-lg border border-line px-3 py-1.5 text-[12px] text-ink-muted">Book a call</span>
-                  <span className="ml-auto text-[11px] text-ink-faint">1-click templates</span>
-                </div>
-              )}
             </motion.div>
           ))}
         </div>
 
-        {/* Stat strip */}
-        <motion.div
-          {...rise(0.62)}
-          className="grid grid-cols-3 divide-x divide-line border-t border-line bg-white/[0.015] text-center"
-        >
-          <Stat value="18" label="enquiries" />
-          <Stat value="5" label="high-priority" />
-          <Stat value="12m" label="to inbox-zero" />
+        <motion.div {...rise(0.5)} className="grid grid-cols-3 border-t border-line">
+          <Stat n="18" label="Enquiries" />
+          <Stat n="5" label="High" divider />
+          <Stat n="12m" label="To zero" divider />
         </motion.div>
       </motion.div>
     </div>
   );
 }
 
-function ScoreChip({ score, band, muted }) {
+function Stat({ n, label, divider }) {
   return (
-    <span
-      className={`flex h-11 w-11 shrink-0 flex-col items-center justify-center rounded-lg border ${
-        muted ? 'border-line text-ink-faint' : 'border-accent-line bg-bg text-accent'
-      }`}
-    >
-      <span className="text-sm font-bold leading-none">{score}</span>
-      <span className="mt-0.5 text-[8px] font-semibold uppercase tracking-wider opacity-80">{band}</span>
-    </span>
-  );
-}
-
-function Stat({ value, label }) {
-  return (
-    <div className="px-2 py-3">
-      <div className="text-base font-bold text-ink">{value}</div>
-      <div className="text-[10px] uppercase tracking-wider text-ink-faint">{label}</div>
+    <div className={`px-4 py-4 ${divider ? 'border-l border-line' : ''}`}>
+      <div className="text-[22px] font-semibold tabular-nums tracking-[-0.02em] text-ink">{n}</div>
+      <div className="mono mt-1 text-[9px] uppercase tracking-[0.18em] text-ink-faint">{label}</div>
     </div>
-  );
-}
-
-function SortIcon() {
-  return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M7 4v16M7 20l-3-3M7 4l3 3" />
-      <path d="M13 6h7M13 12h5M13 18h3" />
-    </svg>
   );
 }
