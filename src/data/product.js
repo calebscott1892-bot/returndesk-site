@@ -8,6 +8,9 @@
 
 export const SUITE_APP_URL = 'https://c4-saas-suite.vercel.app';
 
+// The standalone ReturnDesk product app (where signups + billing happen).
+export const APP_URL = 'https://app.returndesk.c4studios.com.au';
+
 export const SUITE_BUNDLE = {
   price: 149,
   href: `${SUITE_APP_URL}?ref=returndesk-suite`,
@@ -113,12 +116,12 @@ export const product = {
       ],
     },
   ],
-  // Matches C4 productData lifetime.href — routes to the suite app, which handles
-  // lifetime checkout + grants access on payment. (Raw Stripe LIFETIME_LINKS are archived.)
-  lifetime: { price: 690, href: `${SUITE_APP_URL}?ref=returndesk-lifetime` },
+  // Routes to the standalone ReturnDesk app, which handles lifetime checkout
+  // + grants access on payment.
+  lifetime: { price: 690, href: `${APP_URL}/billing?ref=returndesk-lifetime` },
   pricing: 'Early bird $29/mo — locks in forever. Start free, upgrade in the app.',
 
-  ctaHref: `${SUITE_APP_URL}?ref=returndesk`,
+  ctaHref: `${APP_URL}?ref=returndesk`,
   ctaLabel: 'Start free',
 
   c4Url: 'https://c4studios.com.au',
