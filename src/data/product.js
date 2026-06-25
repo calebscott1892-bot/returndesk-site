@@ -113,7 +113,8 @@ export const product = {
       ],
     },
   ],
-  lifetime: { price: 690, href: `${SUITE_APP_URL}?ref=returndesk-lifetime` },
+  // Direct Stripe one-time checkout (from C4 productData LIFETIME_LINKS).
+  lifetime: { price: 690, href: 'https://buy.stripe.com/dRmbJ16X68Vmfff4Uo3ZK0h' },
   pricing: 'Early bird $29/mo — locks in forever. Start free, upgrade in the app.',
 
   ctaHref: `${SUITE_APP_URL}?ref=returndesk`,
