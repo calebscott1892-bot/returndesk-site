@@ -161,6 +161,8 @@ export const content = {
     'ReturnDesk floats the highest-value enquiries to the top, with the reasoning to back it — so nothing valuable slips through.',
 
   socialHeadline: 'Built for inboxes that decide the week',
+  // Flip to true + add a real `name` to each testimonial below to ship real social proof.
+  testimonialsAreReal: false,
   testimonials: [
     { quote: 'I used to answer top-to-bottom and miss the good ones. Now the quote requests are right there at the top.', role: 'Plumbing business' },
     { quote: 'The reason next to each score is the bit I trust. I can see exactly why a job is flagged urgent.', role: 'Electrical contractor' },
