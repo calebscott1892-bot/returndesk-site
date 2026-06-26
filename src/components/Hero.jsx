@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { product, content } from '../data/product.js';
 import { Container, Button, Eyebrow, ArrowRight, EASE } from './primitives.jsx';
-import ProductMock from './ProductMock.jsx';
+import PriorityStack from './PriorityStack.jsx';
 
 export default function Hero() {
   const reduce = useReducedMotion();
@@ -53,7 +53,7 @@ export default function Hero() {
 
           {/* Visual */}
           <div data-reveal="">
-            <ProductMock />
+            <PriorityStack />
           </div>
         </div>
       </Container>
