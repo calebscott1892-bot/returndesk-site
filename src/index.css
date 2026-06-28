@@ -6,7 +6,7 @@
  * ReturnDesk — a C4 Studios product.
  * Matches the c4studios.com.au design language: warm-light editorial, near-black
  * type, monospace technical labels, hairline borders, minimal radius, restrained
- * accent use. Distinct identity = ReturnDesk's deep-azure accent.
+ * accent use. Distinct identity = ReturnDesk inbox-orange accent.
  */
 :root {
   /* ── Surfaces (C4 warm light) ── */
@@ -21,11 +21,11 @@
   --text-subtle: #6c6a62;
   --text-faint: #6e6c61;
 
-  /* ── ReturnDesk accent: deep azure (legible on light) ── */
-  --accent: #1f6fb2;
-  --accent-strong: #2d82c8;
-  --accent-soft: rgba(31, 111, 178, 0.08);
-  --accent-line: rgba(31, 111, 178, 0.30);
+  /* ── ReturnDesk accent: deep orange (from the inbox logo) ── */
+  --accent: #ee460f;
+  --accent-strong: #fb4a18;
+  --accent-soft: rgba(251, 74, 24, 0.08);
+  --accent-line: rgba(251, 74, 24, 0.30);
   --accent-ink: #ffffff; /* text on the accent (buttons) */
 
   /* ── Borders ── */
