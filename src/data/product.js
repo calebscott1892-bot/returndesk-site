@@ -185,5 +185,5 @@ export const seo = {
     'ReturnDesk scores every incoming enquiry on intent and value, tells you why in plain English, and gives one-click templated replies — so the jobs that pay get answered first. Manual-first. A C4 Studios product.',
   url: product.siteUrl,
   ogImage: `${product.siteUrl}/og.png`,
-  themeColor: '#0f1115',
+  themeColor: '#f7f5f2',
 };

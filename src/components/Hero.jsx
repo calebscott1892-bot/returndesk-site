@@ -61,7 +61,7 @@ export default function Hero() {
       {/* Bottom meta strip — C4 signature */}
       <div className="border-t border-line">
         <Container className="py-4">
-          <div className="mono grid grid-cols-2 gap-2 text-center text-[10px] font-medium uppercase tracking-[0.2em] text-ink-faint sm:grid-cols-4">
+          <div className="mono grid grid-cols-3 gap-2 text-center text-[10px] font-medium uppercase tracking-[0.2em] text-ink-faint sm:grid-cols-4">
             <span>Perth-built</span>
             <span>Start free</span>
             <span className="hidden sm:inline">{content.heroMetaTag}</span>

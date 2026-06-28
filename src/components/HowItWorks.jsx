@@ -378,6 +378,7 @@ export default function HowItWorks() {
                   <button
                     key={s.step}
                     type="button"
+                    tabIndex={-1}
                     onClick={() => handleStep(i)}
                     className="h-1.5 rounded-full transition-all duration-300"
                     style={{
