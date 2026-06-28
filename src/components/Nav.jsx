@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { product } from '../data/product.js';
 import { Button, Wordmark, ArrowRight, EASE } from './primitives.jsx';
+import { useScrolledPast, useScrollSpy } from '../lib/useScroll.js';
 
 const LINKS = [
   { href: '#how', label: 'How it works' },
@@ -10,9 +11,13 @@ const LINKS = [
   { href: '#faq', label: 'FAQ' },
 ];
 
+const SPY_IDS = LINKS.map((l) => l.href.slice(1));
+
 export default function Nav() {
   const [open, setOpen] = useState(false);
   const reduce = useReducedMotion();
+  const condensed = useScrolledPast(40);
+  const activeId = useScrollSpy(SPY_IDS);
 
   // Close on Escape; lock body scroll while the mobile menu is open.
   useEffect(() => {
@@ -31,24 +36,38 @@ export default function Nav() {
 
   return (
     <header
-      className="sticky top-0 z-50 border-b border-line backdrop-blur-md"
-      style={{ backgroundColor: 'color-mix(in srgb, var(--bg) 85%, transparent)' }}
+      className="sticky top-0 z-50 border-b border-line backdrop-blur-md transition-[background-color] duration-300"
+      style={{
+        backgroundColor: condensed
+          ? 'color-mix(in srgb, var(--bg) 95%, transparent)'
+          : 'color-mix(in srgb, var(--bg) 85%, transparent)',
+      }}
     >
-      <div className="mx-auto flex h-16 w-full max-w-container items-center justify-between px-6 md:px-12">
+      <div
+        className={`mx-auto flex w-full max-w-container items-center justify-between px-6 transition-[height] duration-300 md:px-12 ${
+          condensed ? 'h-14' : 'h-16'
+        }`}
+      >
         <a href="#top" className="rounded-[3px]" aria-label={`${product.name} home`}>
           <Wordmark logo={product.logo} name={product.name} />
         </a>
 
         <nav className="hidden items-center gap-9 md:flex" aria-label="Primary">
-          {LINKS.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="mono text-[11px] font-medium uppercase tracking-[0.14em] text-ink-subtle transition-colors hover:text-ink"
-            >
-              {l.label}
-            </a>
-          ))}
+          {LINKS.map((l) => {
+            const current = activeId === l.href.slice(1);
+            return (
+              <a
+                key={l.href}
+                href={l.href}
+                aria-current={current ? 'true' : undefined}
+                className={`mono text-[11px] font-medium uppercase tracking-[0.14em] transition-colors ${
+                  current ? 'text-accent' : 'text-ink-subtle hover:text-ink'
+                }`}
+              >
+                {l.label}
+              </a>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-4">
@@ -93,16 +112,22 @@ export default function Nav() {
             style={{ overflow: 'hidden' }}
           >
             <nav className="mx-auto flex w-full max-w-container flex-col px-6 py-2" aria-label="Mobile">
-              {LINKS.map((l) => (
-                <a
-                  key={l.href}
-                  href={l.href}
-                  onClick={() => setOpen(false)}
-                  className="mono flex min-h-[48px] items-center border-b border-line/60 text-[12px] font-medium uppercase tracking-[0.14em] text-ink-subtle transition-colors hover:text-ink"
-                >
-                  {l.label}
-                </a>
-              ))}
+              {LINKS.map((l) => {
+                const current = activeId === l.href.slice(1);
+                return (
+                  <a
+                    key={l.href}
+                    href={l.href}
+                    onClick={() => setOpen(false)}
+                    aria-current={current ? 'true' : undefined}
+                    className={`mono flex min-h-[48px] items-center border-b border-line/60 text-[12px] font-medium uppercase tracking-[0.14em] transition-colors ${
+                      current ? 'text-accent' : 'text-ink-subtle hover:text-ink'
+                    }`}
+                  >
+                    {l.label}
+                  </a>
+                );
+              })}
               <div className="flex items-center justify-between gap-4 py-4">
                 <a
                   href="https://c4studios.com.au"
