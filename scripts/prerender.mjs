@@ -14,16 +14,16 @@
  * including CI with no browser.
  */
 import { readFile, writeFile, rm, mkdir } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, resolve, join } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, '..');
 
-const { render, renderLanding } = await import(resolve(root, 'dist-server/entry-server.js'));
-const { renderHead, landingSchemas } = await import(resolve(root, 'src/lib/seo.js'));
-const { seo } = await import(resolve(root, 'src/data/product.js'));
-const { landings } = await import(resolve(root, 'src/data/landings.js'));
+const { render, renderLanding } = await import(pathToFileURL(resolve(root, 'dist-server/entry-server.js')).href);
+const { renderHead, landingSchemas } = await import(pathToFileURL(resolve(root, 'src/lib/seo.js')).href);
+const { seo } = await import(pathToFileURL(resolve(root, 'src/data/product.js')).href);
+const { landings } = await import(pathToFileURL(resolve(root, 'src/data/landings.js')).href);
 
 const templatePath = resolve(root, 'dist/index.html');
 const template = await readFile(templatePath, 'utf8');
